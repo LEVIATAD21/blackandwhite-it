@@ -1,0 +1,21 @@
+# Backups locais
+.refinamento*/
+.backups-*/
+*.bak-*
+*.bak
+*~
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencias
+node_modules/
