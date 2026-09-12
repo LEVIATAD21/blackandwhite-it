@@ -4,11 +4,11 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "checkJs": false,
-    "allowJs": true,
+    "allowJs": false,
     "noEmit": true,
     "strict": false,
     "skipLibCheck": true
   },
-  "include": ["js/**/*.js"],
-  "exclude": ["node_modules"]
+  "include": [],
+  "exclude": ["node_modules", "js/**"]
 }
