@@ -80,8 +80,6 @@
     </div>
     <ul class="hero-stats" aria-label="Diferenciais">
       <li><strong>R$0</strong><span>De entrada</span></li>
-      <li><strong>R$ 15k</strong><span>Economia anual</span></li>
-      <li><strong>R$ 15k</strong><span>Economia anual</span></li>
       <li><strong>24/7</strong><span>Site no ar</span></li>
       <li><strong>0</strong><span>Técnico para contratar</span></li>
       <li><strong>100%</strong><span>Suporte incluso</span></li>
@@ -150,7 +148,7 @@
           <p>Para profissionais autônomos e pequenos negócios.</p>
           <div class="plan-price">
             <small>a partir de</small>
-            <strong>R$ 397<span>/mês</span></strong>
+            <strong>R$ 149<span>/mês</span></strong>
           </div>
         </header>
         <ul class="plan-features">
@@ -171,7 +169,7 @@
           <p>Para empresas que querem crescer com presença forte.</p>
           <div class="plan-price">
             <small>a partir de</small>
-            <strong>R$ 797<span>/mês</span></strong>
+            <strong>R$ 299<span>/mês</span></strong>
           </div>
         </header>
         <ul class="plan-features">
@@ -192,7 +190,7 @@
           <p>Para e-commerce, sistemas e aplicativos sob medida.</p>
           <div class="plan-price">
             <small>a partir de</small>
-            <strong>R$ 1.597<span>/mês</span></strong>
+            <strong>R$ 599<span>/mês</span></strong>
           </div>
         </header>
         <ul class="plan-features">
@@ -584,9 +582,9 @@
       <label>
         <span>Qual plano te interessa?</span>
         <select name="plano">
-          <option>Essencial — R$ 397/mês</option>
-          <option>Profissional — R$ 797/mês</option>
-          <option>Avançado — R$ 1.597/mês</option>
+          <option>Essencial — R$ 149/mês</option>
+          <option>Profissional — R$ 299/mês</option>
+          <option>Avançado — R$ 599/mês</option>
           <option>Ainda não sei, quero conversar</option>
         </select>
       </label>
@@ -620,7 +618,7 @@
 <!-- ===== CTA FINAL ===== -->
 <section class="cta-final">
   <div class="container">
-    <h2>Seu site profissional <span class="text-gradient">por menos de R$ 14 por dia.</span></h2>
+    <h2>Seu site profissional <span class="text-gradient">por menos de R$ 5 por dia.</span></h2>
     <p>Pare de gastar fortunas com TI. Alugue, durma tranquilo e foque no que importa: o seu negócio.</p>
     <a href="https://wa.me/5521995078663?text=Ol%C3%A1%21%20Quero%20alugar%20meu%20site%20agora." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.7.5 3.4 1.3 4.9L2 22l5.3-1.4c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
@@ -645,9 +643,9 @@
     <div>
       <h4>Planos</h4>
       <ul>
-        <li><a href="#planos">Essencial — R$ 397/mês</a></li>
-        <li><a href="#planos">Profissional — R$ 797/mês</a></li>
-        <li><a href="#planos">Avançado — R$ 1.597/mês</a></li>
+        <li><a href="#planos">Essencial — R$ 149/mês</a></li>
+        <li><a href="#planos">Profissional — R$ 299/mês</a></li>
+        <li><a href="#planos">Avançado — R$ 599/mês</a></li>
         <li><a href="#planos">Plano personalizado</a></li>
       </ul>
     </div>
