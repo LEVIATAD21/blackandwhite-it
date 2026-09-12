@@ -1,0 +1,30 @@
+# ============================================
+# BLACK & WHITE IT — Apache Security Headers
+# ============================================
+
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Prevent clickjacking
+Header always set X-Frame-Options "SAMEORIGIN"
+
+# Prevent MIME sniffing
+Header always set X-Content-Type-Options "nosniff"
+
+# Control referrer information
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Restrict browser features
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# HSTS (enable after confirming HTTPS works)
+# Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+# Prevent browsers from caching sensitive content
+<FilesMatch "\.(html|htm)$">
+  Header set Cache-Control "no-cache, no-store, must-revalidate"
+  Header set Pragma "no-cache"
+  Header set Expires 0
+</FilesMatch>

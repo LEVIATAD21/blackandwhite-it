@@ -1,24 +1,33 @@
-![Motion Banner](assets/motion-banner.gif)
-
 # Black & White IT
 
-![Loop visual da Black and White IT](assets/blackwhite-loop.svg)
-
-<p align="center">
-  <img src="assets/blackwhite-hero.png" alt="Ilustração da Black & White IT com produtos digitais, hospedagem e suporte" width="100%" />
-</p>
-
-<p align="center"><strong>Projeto de presença digital para serviços de sites, sistemas e suporte técnico recorrente.</strong></p>
+Site institucional de página única para a **Black & White IT** — empresa de aluguel de sites, aplicativos e sistemas com manutenção, segurança e suporte inclusos.
 
 ## Visão geral
 
-Este repositório contém o site institucional da Black & White IT, com uma proposta de serviços digitais por assinatura. O código concentra uma landing page responsiva, informações de planos, explicação de serviços e caminhos de contato.
+A Black & White IT oferece um modelo de assinatura mensal para presença digital. Em vez de comprar um site caro e contratar técnico de TI, o cliente aluga e recebe tudo incluso: hospedagem, SSL, manutenção, atualizações, segurança e suporte.
+
+## Estrutura de pastas
+
+```
+blackandwhite-it/
+├── index.html
+├── README.md
+├── jsconfig.json
+├── css/
+│   └── style.css
+├── js/
+│   └── script.js
+└── assets/
+```
 
 ## Tecnologias
 
-`HTML` · `CSS` · `JavaScript`
+- HTML5 semântico
+- CSS3 puro (variáveis, grid, flexbox, animações)
+- JavaScript vanilla (ES2020+, IIFE, IntersectionObserver)
+- Fontes: Inter e JetBrains Mono (Google Fonts)
 
-## Executar localmente
+## Como executar localmente
 
 ```bash
 git clone https://github.com/LEVIATAD21/blackandwhite-it.git
@@ -26,8 +35,28 @@ cd blackandwhite-it
 python3 -m http.server 8080
 ```
 
-Abra `http://localhost:8080` no navegador.
+Acesse `http://localhost:8080` no navegador.
+
+## Responsividade
+
+O site é responsivo e funciona em telas a partir de 320px até 1440px+, com breakpoints em 980px, 768px e 480px.
+
+## Acessibilidade
+
+- Skip-link para pular ao conteúdo principal
+- Atributos ARIA em elementos interativos
+- Focus-visible para navegação por teclado
+- prefers-reduced-motion respeitado
+- Contraste de cores adequado
 
 ## Transparência de conteúdo
 
 Depoimentos e resultados comerciais devem ser publicados somente quando forem verificáveis e autorizados pelas pessoas ou empresas mencionadas.
+
+## Autor
+
+Black & White IT — Soluções de TI por assinatura.
+
+## Licença
+
+Todos os direitos reservados.

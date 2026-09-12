@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">Black and White IT em movimento</title><desc id="desc">Cartões digitais e sinal de hospedagem animados.</desc>
-  <style>@keyframes scan{0%{transform:translateX(-160px);opacity:0}20%,78%{opacity:.9}100%{transform:translateX(430px);opacity:0}}@keyframes card{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}.scan{animation:scan 3.8s ease-in-out infinite}.card{animation:card 3.1s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.scan,.card{animation:none}}</style>
-  <image href="blackwhite-hero.png" width="1280" height="720" preserveAspectRatio="xMidYMid slice"/>
-  <rect class="scan" x="760" y="212" width="88" height="304" fill="#83ddff" opacity=".3"/><rect class="card" x="1000" y="285" width="130" height="92" rx="14" fill="none" stroke="#e8f4ff" stroke-width="4"/><rect class="card" style="animation-delay:.6s" x="1040" y="410" width="130" height="92" rx="14" fill="none" stroke="#75cfff" stroke-width="4"/>
-</svg>
