@@ -1,76 +1,48 @@
 # Black & White IT
 
-Site institucional de página única para a **Black & White IT** — empresa de aluguel de sites, aplicativos e sistemas com manutenção, segurança e suporte inclusos.
+Landing page institucional para a **Black & White IT** — empresa de aluguel e assinatura de sites, apps e sistemas com tudo incluso: hospedagem, domínio, SSL, design, manutenção, segurança e suporte.
 
-## Visão geral
-
-A Black & White IT oferece um modelo de assinatura mensal para presença digital. Em vez de comprar um site caro e contratar técnico de TI, o cliente aluga e recebe tudo incluso: hospedagem, SSL, manutenção, atualizações, segurança e suporte.
-
-## Estrutura de pastas
+## Estrutura Real
 
 ```
-blackandwhite-it/
-├── index.html
-├── README.md
-├── jsconfig.json
-├── robots.txt
-├── .htaccess
-├── _headers
-├── netlify.toml
-├── css/
-│   └── style.css
-└── js/
-    └── script.js
+blackandwhite-it-main/
+├── assets/                # Imagens e mídias locais
+├── css/style.css          # Estilos completos
+├── js/script.js           # Lógica: menu, formulário, WhatsApp, reveal
+├── .vscode/settings.json  # Configuração do editor
+├── jsconfig.json          # Configuração JS para o VS Code
+├── .gitignore             # Proteção contra arquivos indesejados
+├── index.html             # Página principal
+└── README.md
 ```
 
 ## Tecnologias
 
-- HTML5 semântico
-- CSS3 puro (variáveis, grid, flexbox, animações)
-- JavaScript vanilla (ES2020+, IIFE, IntersectionObserver)
-- Fontes: Inter e JetBrains Mono (Google Fonts)
+HTML5, CSS3 e JavaScript (ES2020+). Sem frameworks.
 
-## Como executar localmente
+## Funcionalidades
+
+- Landing page responsiva (320px a 1440px+)
+- Menu mobile com painel lateral e ARIA correto
+- Formulário que abre o WhatsApp com mensagem pronta
+- Validação inline (sem alert)
+- Animações sutis de scroll com IntersectionObserver
+- Botão voltar ao topo após 600px
+- Dark mode preto e branco
+- Acessibilidade: skip-link, ARIA, focus-visible, prefers-reduced-motion
+
+## Como rodar localmente
 
 ```bash
-git clone https://github.com/LEVIATAD21/blackandwhite-it.git
-cd blackandwhite-it
 python3 -m http.server 8080
+# ou
+npx serve .
 ```
 
-Acesse `http://localhost:8080` no navegador.
+## Contato
 
-## Segurança
-
-- Content Security Policy (CSP) restritivo via meta tag
-- Honeypot duplo para detecção de bots
-- Anti-bot com timeout de 5 segundos
-- Validação de entrada com whitelist Unicode
-- Sanitização de campos contra injeção
-- Headers de segurança (X-Frame-Options, X-Content-Type-Options, etc.)
-- Bloqueio de bots de IA via robots.txt
-- HTTPS forçado via .htaccess
-
-## Responsividade
-
-O site é responsivo e funciona em telas a partir de 320px até 1440px+, com breakpoints em 980px, 768px e 480px.
-
-## Acessibilidade
-
-- Skip-link para pular ao conteúdo principal
-- Atributos ARIA em elementos interativos
-- Focus-visible para navegação por teclado
-- prefers-reduced-motion respeitado
-- Contraste de cores adequado
-
-## Transparência de conteúdo
-
-Depoimentos e resultados comerciais devem ser publicados somente quando forem verificáveis e autorizados pelas pessoas ou empresas mencionadas.
-
-## Autor
-
-Black & White IT — Soluções de TI por assinatura.
+WhatsApp: (21) 99507-8663
 
 ## Licença
 
-Todos os direitos reservados.
+Uso interno — Black & White IT.

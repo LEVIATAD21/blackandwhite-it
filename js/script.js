@@ -1,21 +1,23 @@
-/* ============================================
-   BLACK & WHITE IT — Script
-   ============================================ */
+/* BLACK & WHITE IT — JavaScript v4 */
 (function () {
   'use strict';
-
   document.addEventListener('DOMContentLoaded', () => {
-
-    /* ---------- Ano dinâmico no footer ---------- */
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    /* ---------- Marcar body como carregado ---------- */
     document.body.classList.remove('is-loading');
 
-    /* ---------- Menu hamburger ---------- */
+    const header = document.getElementById('header');
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    const closeMenu = () => {
+      navMenu.classList.remove('active');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
 
     if (hamburger && navMenu) {
       hamburger.addEventListener('click', () => {
@@ -23,182 +25,105 @@
         hamburger.classList.toggle('active', isOpen);
         hamburger.setAttribute('aria-expanded', String(isOpen));
         document.body.style.overflow = isOpen ? 'hidden' : '';
-        if (isOpen) {
-          const firstLink = navMenu.querySelector('a');
-          if (firstLink) firstLink.focus({ preventScroll: true });
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+          closeMenu();
+          hamburger.focus();
         }
       });
     }
+    navLinks.forEach((l) => l.addEventListener('click', closeMenu));
 
-    /* ---------- Smooth scroll + fechar menu ---------- */
-    const SAFE_HASHES = /^#[a-zA-Z][a-zA-Z0-9_-]*$/;
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href && href.length > 1 && SAFE_HASHES.test(href)) {
-          const target = document.querySelector(href);
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            if (navMenu && navMenu.classList.contains('active')) {
-              navMenu.classList.remove('active');
-              hamburger.classList.remove('active');
-              hamburger.setAttribute('aria-expanded', 'false');
-              document.body.style.overflow = '';
-            }
-          }
-        }
-      });
-    });
-
-    /* ---------- Header com sombra ao rolar ---------- */
-    const header = document.getElementById('header');
     if (header) {
-      const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 30);
-      const onScrollDebounced = () => header.classList.toggle('scrolled', window.scrollY > 30);
+      let ticking = false;
+      const onScroll = () => {
+          window.requestAnimationFrame(() => {
+            header.classList.toggle('scrolled', window.scrollY > 30);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     }
 
-    /* ---------- Formulário -> WhatsApp ---------- */
-    const form = document.getElementById('contactForm');
-    if (form) {
-      const formTimestamp = Date.now();
+    const backTop = document.createElement('button');
+    backTop.type = 'button';
+    backTop.className = 'back-top';
+    backTop.setAttribute('aria-label', 'Voltar ao topo');
+    backTop.innerHTML = '\u2191';
+    backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.body.appendChild(backTop);
+    window.addEventListener('scroll', () => {
+      backTop.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
 
-      /* Honeypot multi-campo: dois campos invisíveis que bots automáticos preenchem */
-      function isHoneypotTriggered() {
-        if (form.website && form.website.value) return true;
-        if (form.company && form.company.value) return true;
-        return false;
-      }
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      const honeypot = contactForm.querySelector('input[name="website"]');
+      const formTs = document.getElementById('formTs');
+      if (formTs) formTs.value = String(Date.now());
 
-      function stripDangerousUnicode(str) {
-        return str
-          .replace(/[\u200B-\u200F\u2028-\u202F\u2060-\u2069\uFEFF]/g, '')
-          .replace(/[\u0400-\u04FF]/g, function (c) {
-            const map = { '\u0430': 'a', '\u0431': 'b', '\u0432': 'v', '\u0433': 'g', '\u0434': 'd', '\u0435': 'e', '\u0451': 'yo', '\u0436': 'zh', '\u0437': 'z', '\u0438': 'i', '\u0439': 'j', '\u043A': 'k', '\u043B': 'l', '\u043C': 'm', '\u043D': 'n', '\u043E': 'o', '\u043F': 'p', '\u0440': 'r', '\u0441': 's', '\u0442': 't', '\u0443': 'u', '\u0444': 'f', '\u0445': 'kh', '\u0446': 'ts', '\u0447': 'ch', '\u0448': 'sh', '\u0449': 'shch', '\u044A': '', '\u044B': 'y', '\u044C': '', '\u044D': 'e', '\u044E': 'yu', '\u044F': 'ya' };
-            return map[c] || c;
-          });
-      }
-
-      function sanitizeFieldName(value) {
-        return value
-          .replace(/[<>"'{}|\\^~\[\];:\/]/g, '')
-          .replace(/[\u200F\u202B\u202E]/g, '')
-          .replace(/\s+/g, ' ')
-          .trim();
-      }
-
-      form.addEventListener('submit', (e) => {
+      contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        if (honeypot && honeypot.value.trim() !== '') return;
+        if (formTs && Date.now() - Number(formTs.value) < 3000) return;
 
-        if (isHoneypotTriggered()) return;
+        const nameInput = document.getElementById('name');
+        const contactInput = document.getElementById('contact');
+        const messageInput = document.getElementById('message');
+        const nameError = document.getElementById('nameError');
+        const contactError = document.getElementById('contactError');
+        const messageError = document.getElementById('messageError');
 
-        const elapsed = Date.now() - formTimestamp;
-        if (elapsed < 5000) {
-          const errorEl = form.querySelector('.form-error');
-          if (errorEl) {
-            errorEl.textContent = 'Por favor, aguarde alguns segundos antes de enviar.';
-            errorEl.classList.add('visible');
-          }
-          return;
-        }
+        [nameError, contactError, messageError].forEach((el) => {
+          if (el) el.classList.remove('visible');
+        });
 
-        const rawNome = form.nome.value.trim();
-        const rawContato = form.contato.value.trim();
-        const rawMensagem = form.mensagem.value.trim();
-        const plano = sanitizeFieldName(form.plano.value);
-        const tipo = sanitizeFieldName(form.tipo.value);
+        const name = nameInput ? nameInput.value.trim() : '';
+        const contact = contactInput ? contactInput.value.trim() : '';
+        const message = messageInput ? messageInput.value.trim() : '';
+        let valid = true;
 
-        if (!rawNome || !rawContato || !rawMensagem) {
-          const errorEl = form.querySelector('.form-error');
-          if (errorEl) {
-            errorEl.textContent = 'Preencha todos os campos obrigatórios.';
-            errorEl.classList.add('visible');
-          }
-          return;
-        }
+        if (name.length < 2) { if (nameError) nameError.classList.add('visible'); valid = false; }
+        if (contact.length < 5) { if (contactError) contactError.classList.add('visible'); valid = false; }
+        if (message.length < 10) { if (messageError) messageError.classList.add('visible'); valid = false; }
 
-        const nome = stripDangerousUnicode(rawNome);
-        const contato = stripDangerousUnicode(rawContato);
-        const mensagem = stripDangerousUnicode(rawMensagem);
+        const texto = encodeURIComponent(
+          '*Novo contato pelo site*\n\n*Nome:* ' + name +
+          '\n*Contato:* ' + contact +
+          '\n*Mensagem:*\n' + message
+        );
+        window.open('https://wa.me/5521995078663?text=' + texto, '_blank', 'noopener,noreferrer');
 
-        const SAFE_TEXT = /^[\p{L}\p{N}\s@.,\-()!?áàãâéêíóôõúüçñ:;/'\\&*#%+={}]+$/u;
-
-        if (nome.length < 2 || nome.length > 100) {
-          const errorEl = form.querySelector('.form-error');
-          if (errorEl) {
-            errorEl.textContent = 'Nome deve ter entre 2 e 100 caracteres.';
-            errorEl.classList.add('visible');
-          }
-          return;
-        }
-
-        if (contato.length < 5 || contato.length > 120) {
-          const errorEl = form.querySelector('.form-error');
-          if (errorEl) {
-            errorEl.textContent = 'Contato deve ter entre 5 e 120 caracteres.';
-            errorEl.classList.add('visible');
-          }
-          return;
-        }
-
-        if (mensagem.length < 10 || mensagem.length > 1000) {
-          const errorEl = form.querySelector('.form-error');
-          if (errorEl) {
-            errorEl.textContent = 'Mensagem deve ter entre 10 e 1000 caracteres.';
-            errorEl.classList.add('visible');
-          }
-          return;
-        }
-
-        if (!SAFE_TEXT.test(nome) || !SAFE_TEXT.test(contato) || !SAFE_TEXT.test(mensagem)) {
-          const errorEl = form.querySelector('.form-error');
-          if (errorEl) {
-            errorEl.textContent = 'Use apenas caracteres normais, sem símbolos especiais perigosos.';
-            errorEl.classList.add('visible');
-          }
-          return;
-        }
-
-        const errorEl = form.querySelector('.form-error');
-        if (errorEl) {
-          errorEl.classList.remove('visible');
-        }
-
-        const texto =
-          'Ol\u00E1! Vim pelo site da Black & White IT e quero alugar.\n\n' +
-          '*Nome:* ' + nome + '\n' +
-          '*Contato:* ' + contato + '\n' +
-          '*Plano:* ' + plano + '\n' +
-          '*Tipo de projeto:* ' + tipo + '\n\n' +
-          '*Descri\u00E7\u00E3o:*\n' + mensagem;
-
-        const url = 'https://wa.me/5521995078663?text=' + encodeURIComponent(texto);
-        window.open(url, '_blank', 'noopener,noreferrer');
+        const ok = document.createElement('p');
+        ok.className = 'form-success';
+        ok.setAttribute('role', 'status');
+        ok.textContent = 'Mensagem enviada. O WhatsApp abriu em nova aba.';
+        contactForm.appendChild(ok);
+        setTimeout(() => ok.remove(), 6000);
+        contactForm.reset();
+        if (formTs) formTs.value = String(Date.now());
       });
     }
 
-    /* ---------- Reveal on scroll ---------- */
-    const revealTargets = document.querySelectorAll(
-      '.section-head, .compare-card, .plan-card, .service-card, .portfolio-card, .process-list li, .about-text, .about-card, .faq-list details, .contact-info, .contact-form, .cta-final'
-    );
-    revealTargets.forEach(el => el.classList.add('reveal'));
-
-    if ('IntersectionObserver' in window) {
+    const selectors = ['.section-head','.compare-card','.plan-card','.service-card','.portfolio-card','.process-list li','.about-text','.about-card','.faq-list details','.contact-info','.contact-form','.cta-final','.market-compare'].join(',');
+    const targets = document.querySelectorAll(selectors);
+    targets.forEach((el) => el.classList.add('reveal'));
+    if ('IntersectionObserver' in window && targets.length) {
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
             io.unobserve(entry.target);
           }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-      revealTargets.forEach(el => io.observe(el));
+      targets.forEach((el) => io.observe(el));
     } else {
-      revealTargets.forEach(el => el.classList.add('visible'));
+      targets.forEach((el) => el.classList.add('visible'));
     }
-
   });
 })();
