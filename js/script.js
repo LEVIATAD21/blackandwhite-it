@@ -23,6 +23,10 @@
         hamburger.classList.toggle('active', isOpen);
         hamburger.setAttribute('aria-expanded', String(isOpen));
         document.body.style.overflow = isOpen ? 'hidden' : '';
+        if (isOpen) {
+          const firstLink = navMenu.querySelector('a');
+          if (firstLink) firstLink.focus({ preventScroll: true });
+        }
       });
     }
 
