@@ -52,6 +52,7 @@
     const header = document.getElementById('header');
     if (header) {
       const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 30);
+      const onScrollDebounced = () => header.classList.toggle('scrolled', window.scrollY > 30);
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     }
