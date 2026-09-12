@@ -10,6 +10,9 @@
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+    /* ---------- Marcar body como carregado ---------- */
+    document.body.classList.remove('is-loading');
+
     /* ---------- Menu hamburger ---------- */
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
