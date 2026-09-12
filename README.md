@@ -13,11 +13,14 @@ blackandwhite-it/
 ├── index.html
 ├── README.md
 ├── jsconfig.json
+├── robots.txt
+├── .htaccess
+├── _headers
+├── netlify.toml
 ├── css/
 │   └── style.css
-├── js/
-│   └── script.js
-└── assets/
+└── js/
+    └── script.js
 ```
 
 ## Tecnologias
@@ -36,6 +39,17 @@ python3 -m http.server 8080
 ```
 
 Acesse `http://localhost:8080` no navegador.
+
+## Segurança
+
+- Content Security Policy (CSP) restritivo via meta tag
+- Honeypot duplo para detecção de bots
+- Anti-bot com timeout de 5 segundos
+- Validação de entrada com whitelist Unicode
+- Sanitização de campos contra injeção
+- Headers de segurança (X-Frame-Options, X-Content-Type-Options, etc.)
+- Bloqueio de bots de IA via robots.txt
+- HTTPS forçado via .htaccess
 
 ## Responsividade
 
