@@ -1887,3 +1887,23 @@ details > summary:focus-visible {
 }
 .back-top.visible { opacity: 1; pointer-events: auto; }
 .back-top:hover { transform: translateY(-3px); }
+
+
+/* ===== Logo image ===== */
+.logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.logo:hover .logo-img {
+  transform: rotate(-6deg) scale(1.08);
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.35);
+}
+.logo-footer .logo-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
