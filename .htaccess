@@ -25,6 +25,9 @@ Header always set X-XSS-Protection "1; mode=block"
 # Prevent DNS prefetch
 Header always set X-DNS-Prefetch-Control "off"
 
+# HSTS - previne SSL stripping (ativar apos confirmar HTTPS)
+Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
 # Prevent browsers from caching sensitive content
 <FilesMatch "\.(html|htm)$">
   Header set Cache-Control "no-cache, no-store, must-revalidate"

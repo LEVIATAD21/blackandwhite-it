@@ -424,6 +424,7 @@ button {
 .underline-accent {
   position: relative;
   white-space: nowrap;
+  z-index: 0;
 }
 
 .underline-accent::after {
@@ -1048,9 +1049,9 @@ button {
 .mock-screen span:nth-child(3) { width: 40%; }
 
 .mock-dashboard {
-  flex-direction: row !important;
-  padding: 0 !important;
-  gap: 0 !important;
+  flex-direction: row;
+  padding: 0;
+  gap: 0;
 }
 
 .mock-sidebar {
@@ -1492,7 +1493,8 @@ button {
 .contact-form select:focus {
   border-color: var(--white);
   background: #18181f;
-  outline: none;
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
 }
 
 .contact-form textarea {

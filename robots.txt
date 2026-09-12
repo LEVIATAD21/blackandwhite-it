@@ -4,7 +4,6 @@ Disallow: /.htaccess
 Disallow: /_headers
 Disallow: /netlify.toml
 Disallow: /jsconfig.json
-Disallow: /robots.txt
 
 User-agent: GPTBot
 Disallow: /

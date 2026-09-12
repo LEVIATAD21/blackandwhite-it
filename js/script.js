@@ -116,7 +116,7 @@
         const contato = stripDangerousUnicode(rawContato);
         const mensagem = stripDangerousUnicode(rawMensagem);
 
-        const SAFE_TEXT = /^[\p{L}\p{N}\s@.,\-()!?áàãâéêíóôõúüçñÁÀÃÂÉÊÍÓÔÕÚÜÇÑ:;/'\u00B0§\\&*#%+={}\u00C0-\u024F]+$/u;
+        const SAFE_TEXT = /^[\p{L}\p{N}\s@.,\-()!?áàãâéêíóôõúüçñ:;/'\\&*#%+={}]+$/u;
 
         if (nome.length < 2 || nome.length > 100) {
           const errorEl = form.querySelector('.form-error');

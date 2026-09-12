@@ -5,6 +5,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=()
   X-XSS-Protection: 1; mode=block
   X-DNS-Prefetch-Control: off
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
 /*.html
   Cache-Control: no-cache, no-store, must-revalidate
