@@ -17,14 +17,30 @@ Header always set X-Content-Type-Options "nosniff"
 Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
 # Restrict browser features
-Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=()"
 
-# HSTS (enable after confirming HTTPS works)
-# Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+# XSS Protection (legacy browsers)
+Header always set X-XSS-Protection "1; mode=block"
+
+# Prevent DNS prefetch
+Header always set X-DNS-Prefetch-Control "off"
 
 # Prevent browsers from caching sensitive content
 <FilesMatch "\.(html|htm)$">
   Header set Cache-Control "no-cache, no-store, must-revalidate"
   Header set Pragma "no-cache"
   Header set Expires 0
+</FilesMatch>
+
+# Block directory listing
+Options -Indexes
+
+# Block access to hidden files
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Block AI crawlers
+<FilesMatch "robots\.txt">
+  Header set X-Robots-Tag "noindex, nofollow"
 </FilesMatch>

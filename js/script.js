@@ -24,10 +24,12 @@
     }
 
     /* ---------- Smooth scroll + fechar menu ---------- */
+    const SAFE_HASHES = /^#[a-zA-Z][a-zA-Z0-9_-]*$/;
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        if (href.length > 1) {
+        if (href && href.length > 1 && SAFE_HASHES.test(href)) {
           const target = document.querySelector(href);
           if (target) {
             e.preventDefault();
@@ -56,14 +58,37 @@
     if (form) {
       const formTimestamp = Date.now();
 
+      /* Honeypot multi-campo: dois campos invisíveis que bots automáticos preenchem */
+      function isHoneypotTriggered() {
+        if (form.website && form.website.value) return true;
+        if (form.company && form.company.value) return true;
+        return false;
+      }
+
+      function stripDangerousUnicode(str) {
+        return str
+          .replace(/[\u200B-\u200F\u2028-\u202F\u2060-\u2069\uFEFF]/g, '')
+          .replace(/[\u0400-\u04FF]/g, function (c) {
+            const map = { '\u0430': 'a', '\u0431': 'b', '\u0432': 'v', '\u0433': 'g', '\u0434': 'd', '\u0435': 'e', '\u0451': 'yo', '\u0436': 'zh', '\u0437': 'z', '\u0438': 'i', '\u0439': 'j', '\u043A': 'k', '\u043B': 'l', '\u043C': 'm', '\u043D': 'n', '\u043E': 'o', '\u043F': 'p', '\u0440': 'r', '\u0441': 's', '\u0442': 't', '\u0443': 'u', '\u0444': 'f', '\u0445': 'kh', '\u0446': 'ts', '\u0447': 'ch', '\u0448': 'sh', '\u0449': 'shch', '\u044A': '', '\u044B': 'y', '\u044C': '', '\u044D': 'e', '\u044E': 'yu', '\u044F': 'ya' };
+            return map[c] || c;
+          });
+      }
+
+      function sanitizeFieldName(value) {
+        return value
+          .replace(/[<>"'{}|\\^~\[\];:\/]/g, '')
+          .replace(/[\u200F\u202B\u202E]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const honeypot = form.website.value;
-        if (honeypot) return;
+        if (isHoneypotTriggered()) return;
 
         const elapsed = Date.now() - formTimestamp;
-        if (elapsed < 3000) {
+        if (elapsed < 5000) {
           const errorEl = form.querySelector('.form-error');
           if (errorEl) {
             errorEl.textContent = 'Por favor, aguarde alguns segundos antes de enviar.';
@@ -72,23 +97,64 @@
           return;
         }
 
-        const nome = form.nome.value.trim();
-        const contato = form.contato.value.trim();
-        const plano = form.plano.value;
-        const tipo = form.tipo.value;
-        const mensagem = form.mensagem.value.trim();
-        const errorEl = form.querySelector('.form-error');
+        const rawNome = form.nome.value.trim();
+        const rawContato = form.contato.value.trim();
+        const rawMensagem = form.mensagem.value.trim();
+        const plano = sanitizeFieldName(form.plano.value);
+        const tipo = sanitizeFieldName(form.tipo.value);
 
-        const hasInvalidChars = /[^\p{L}\p{N}\s@.,\-()!?áàãâéêíóôõúüçñÁÀÃÂÉÊÍÓÔÕÚÜÇÑ:;/''"°§\\&*#%+={}\[\]<>|\\^~`]/u.test(nome + contato + mensagem);
-
-        if (nome.length < 2 || contato.length < 5 || mensagem.length < 10 || hasInvalidChars) {
+        if (!rawNome || !rawContato || !rawMensagem) {
+          const errorEl = form.querySelector('.form-error');
           if (errorEl) {
-            errorEl.textContent = 'Preencha os campos obrigatórios corretamente. Nome (mín. 2), contato (mín. 5) e mensagem (mín. 10 caracteres). Use apenas caracteres normais.';
+            errorEl.textContent = 'Preencha todos os campos obrigatórios.';
             errorEl.classList.add('visible');
           }
           return;
         }
 
+        const nome = stripDangerousUnicode(rawNome);
+        const contato = stripDangerousUnicode(rawContato);
+        const mensagem = stripDangerousUnicode(rawMensagem);
+
+        const SAFE_TEXT = /^[\p{L}\p{N}\s@.,\-()!?áàãâéêíóôõúüçñÁÀÃÂÉÊÍÓÔÕÚÜÇÑ:;/'\u00B0§\\&*#%+={}\u00C0-\u024F]+$/u;
+
+        if (nome.length < 2 || nome.length > 100) {
+          const errorEl = form.querySelector('.form-error');
+          if (errorEl) {
+            errorEl.textContent = 'Nome deve ter entre 2 e 100 caracteres.';
+            errorEl.classList.add('visible');
+          }
+          return;
+        }
+
+        if (contato.length < 5 || contato.length > 120) {
+          const errorEl = form.querySelector('.form-error');
+          if (errorEl) {
+            errorEl.textContent = 'Contato deve ter entre 5 e 120 caracteres.';
+            errorEl.classList.add('visible');
+          }
+          return;
+        }
+
+        if (mensagem.length < 10 || mensagem.length > 1000) {
+          const errorEl = form.querySelector('.form-error');
+          if (errorEl) {
+            errorEl.textContent = 'Mensagem deve ter entre 10 e 1000 caracteres.';
+            errorEl.classList.add('visible');
+          }
+          return;
+        }
+
+        if (!SAFE_TEXT.test(nome) || !SAFE_TEXT.test(contato) || !SAFE_TEXT.test(mensagem)) {
+          const errorEl = form.querySelector('.form-error');
+          if (errorEl) {
+            errorEl.textContent = 'Use apenas caracteres normais, sem símbolos especiais perigosos.';
+            errorEl.classList.add('visible');
+          }
+          return;
+        }
+
+        const errorEl = form.querySelector('.form-error');
         if (errorEl) {
           errorEl.classList.remove('visible');
         }
@@ -102,7 +168,7 @@
           '*Descri\u00E7\u00E3o:*\n' + mensagem;
 
         const url = 'https://wa.me/5521995078663?text=' + encodeURIComponent(texto);
-        window.open(url, '_blank', 'noopener');
+        window.open(url, '_blank', 'noopener,noreferrer');
       });
     }
 
